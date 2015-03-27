@@ -4,6 +4,21 @@ DataProvider package
 Submodules
 ----------
 
+Module contents
+---------------
+
+.. automodule:: DataProvider
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+--------------------------
+
+.. automodule:: DataProvider.entity
+    :members:
+    :undoc-members:
+    :show-inheritance:
+	
 DataProvider.dataprovider module
 --------------------------------
 
@@ -13,18 +28,14 @@ DataProvider.dataprovider module
     :show-inheritance:
 
 DataProvider.parser module
---------------------------
 
-.. automodule:: DataProvider.parser
+DataProvider.dataprovider module
+--------------------------------
+
+.. automodule:: DataProvider.networkdataprovider
     :members:
     :undoc-members:
     :show-inheritance:
 
+DataProvider.parser module
 
-Module contents
----------------
-
-.. automodule:: DataProvider
-    :members:
-    :undoc-members:
-    :show-inheritance:

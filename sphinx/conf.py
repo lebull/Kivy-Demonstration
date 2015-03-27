@@ -21,8 +21,9 @@ import os
 #sys.path.insert(0, os.path.abspath('.'))
 
 #sys.path.insert(0, os.path.abspath('../'))
-sys.path.insert(0, 'C:/Users/TDARSEY/Desktop/Work/Tasks/Active/Kivy')
-sys.path.insert(0, 'C:/Users/TDARSEY/Desktop/Work/Tasks/Active/Kivy/DataProvider')
+#sys.path.insert(0, 'C:/Users/TDARSEY/Desktop/Work/Tasks/Active/Kivy')
+sys.path.insert(0, 'C:/Users/TDARSEY/Desktop/Work/Tasks/Active/Kivy/Source/DataProvider')
+sys.path.insert(0, 'C:/Users/TDARSEY/Desktop/Work/Tasks/Active/Kivy/Source')
 
 #Dump from kivy's sys.path
 sys.path.insert(0, '')
@@ -41,7 +42,7 @@ sys.path.insert(0, 'C:\kivy_1.8.0\Python27\lib\lib-tk')
 sys.path.insert(0, 'C:\kivy_1.8.0\Python27')
 sys.path.insert(0, 'C:\kivy_1.8.0\Python27\lib\site-packages')
 
-sys.path.append(os.path.abspath('../../'))
+sys.path.append(os.path.abspath('../../Source/'))
 #sys.path.append(os.path.abspath('../../'))
 
 # -- General configuration ------------------------------------------------

@@ -49,6 +49,30 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
+<div class="section" id="module-DataProvider">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-DataProvider" title="Permalink to this headline">¶</a></h2>
+<p>DataProvider is a package designed to represent OData and Soap responses as python objects.</p>
+<hr class="docutils" />
+<span class="target" id="module-DataProvider.entity"></span><p>Entity holds data.  Data good.</p>
+<dl class="class">
+<dt id="DataProvider.entity.Entity">
+<em class="property">class </em><code class="descclassname">DataProvider.entity.</code><code class="descname">Entity</code><span class="sig-paren">(</span><em>properties=None</em>, <em>key=None</em>, <em>data_provider=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.entity.Entity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dict</span></code></p>
+<dl class="method">
+<dt id="DataProvider.entity.Entity.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.entity.Entity.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the entity from its assigned database.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DataProvider.entity.Entity.save">
+<code class="descname">save</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.entity.Entity.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the entity in its assigned database.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-DataProvider.dataprovider">
 <span id="dataprovider-dataprovider-module"></span><h2>DataProvider.dataprovider module<a class="headerlink" href="#module-DataProvider.dataprovider" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -67,105 +91,94 @@
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="DataProvider.dataprovider.DataProvider.deleteEntity">
-<code class="descname">deleteEntity</code><span class="sig-paren">(</span><em>entity</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.DataProvider.deleteEntity" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
 <dt id="DataProvider.dataprovider.DataProvider.getEntities">
 <code class="descname">getEntities</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.DataProvider.getEntities" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="DataProvider.dataprovider.DataProvider.getEntity">
-<code class="descname">getEntity</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.DataProvider.getEntity" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="DataProvider.dataprovider.DataProvider.saveEntity">
-<code class="descname">saveEntity</code><span class="sig-paren">(</span><em>entity</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.DataProvider.saveEntity" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getEntity</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.DataProvider.getEntity" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
-<dt id="DataProvider.dataprovider.Entity">
-<em class="property">class </em><code class="descclassname">DataProvider.dataprovider.</code><code class="descname">Entity</code><span class="sig-paren">(</span><em>id=None</em>, <em>properties=None</em>, <em>data_provider=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.Entity" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dict</span></code></p>
-<p>Example of overloading __getatr__ and __setattr__
-This example creates a dictionary where members can be accessed as attributes
-<a class="reference external" href="http://code.activestate.com/recipes/389916-example-setattr-getattr-overloading/">http://code.activestate.com/recipes/389916-example-setattr-getattr-overloading/</a></p>
-<dl class="method">
-<dt id="DataProvider.dataprovider.Entity.create">
-<code class="descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.Entity.create" title="Permalink to this definition">¶</a></dt>
-<dd><p>Saves a copy of an entity&#8217;s</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="DataProvider.dataprovider.Entity.delete">
-<code class="descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.Entity.delete" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="classmethod">
-<dt id="DataProvider.dataprovider.Entity.jsonDecode">
-<em class="property">classmethod </em><code class="descname">jsonDecode</code><span class="sig-paren">(</span><em>json_data</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.Entity.jsonDecode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a json representation of an entity and returns it as an Entity object.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="DataProvider.dataprovider.Entity.jsonEncode">
-<code class="descname">jsonEncode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.Entity.jsonEncode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a json representation of an entity.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="DataProvider.dataprovider.Entity.save">
-<code class="descname">save</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.Entity.save" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="DataProvider.dataprovider.JSONDatabase">
-<em class="property">class </em><code class="descclassname">DataProvider.dataprovider.</code><code class="descname">JSONDatabase</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.JSONDatabase" title="Permalink to this definition">¶</a></dt>
+<dt id="DataProvider.dataprovider.JSONDataProvider">
+<em class="property">class </em><code class="descclassname">DataProvider.dataprovider.</code><code class="descname">JSONDataProvider</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.JSONDataProvider" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../modules.html#DataProvider.dataprovider.DataProvider" title="DataProvider.dataprovider.DataProvider"><code class="xref py py-class docutils literal"><span class="pre">DataProvider.dataprovider.DataProvider</span></code></a></p>
+<p>A dataprovider which is kept locally as a json file.</p>
+<dl class="method">
+<dt id="DataProvider.dataprovider.JSONDataProvider.addEntity">
+<code class="descname">addEntity</code><span class="sig-paren">(</span><em>entity=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.JSONDataProvider.addEntity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an entity.  If no key is present, a key will be generated.  Returns the added Entity.</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="DataProvider.dataprovider.JSONDataProvider.createEntity">
+<code class="descname">createEntity</code><span class="sig-paren">(</span><em>properties=None</em>, <em>key=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.JSONDataProvider.createEntity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an entity in our database.  Returns an Entity.  If no key is present, a key will be generated.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DataProvider.dataprovider.JSONDataProvider.getEntities">
+<code class="descname">getEntities</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.JSONDataProvider.getEntities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return many entities.  Will need a filter.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DataProvider.dataprovider.JSONDataProvider.getEntity">
+<code class="descname">getEntity</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.JSONDataProvider.getEntity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns False if no entity was found.  Loads the database if it has not been yet.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>DataProvider.parser module</p>
+</div>
+<div class="section" id="id1">
+<h2>DataProvider.dataprovider module<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-DataProvider.networkdataprovider"></span><p>It&#8217;s dataprovider, but networked</p>
 <dl class="class">
-<dt id="DataProvider.dataprovider.KivyClockSimulator">
-<em class="property">class </em><code class="descclassname">DataProvider.dataprovider.</code><code class="descname">KivyClockSimulator</code><span class="sig-paren">(</span><em>group=None</em>, <em>target=None</em>, <em>name=None</em>, <em>args=()</em>, <em>kwargs=None</em>, <em>verbose=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.KivyClockSimulator" title="Permalink to this definition">¶</a></dt>
+<dt id="DataProvider.networkdataprovider.KivyClockSimulator">
+<em class="property">class </em><code class="descclassname">DataProvider.networkdataprovider.</code><code class="descname">KivyClockSimulator</code><span class="sig-paren">(</span><em>network_providers=[]</em>, <em>stop_when_requests_done=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.KivyClockSimulator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">threading.Thread</span></code></p>
+<p>A helper class for testing.</p>
 <p>Since Kivy is built to be asynchronous, we need to have kivy&#8217;s
 internal clock ticking.</p>
 <dl class="method">
-<dt id="DataProvider.dataprovider.KivyClockSimulator.run">
-<code class="descname">run</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.KivyClockSimulator.run" title="Permalink to this definition">¶</a></dt>
+<dt id="DataProvider.networkdataprovider.KivyClockSimulator.checkRequestsRemain">
+<code class="descname">checkRequestsRemain</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.KivyClockSimulator.checkRequestsRemain" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="DataProvider.dataprovider.KivyClockSimulator.startMainLoopSimulation">
-<code class="descname">startMainLoopSimulation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.KivyClockSimulator.startMainLoopSimulation" title="Permalink to this definition">¶</a></dt>
+<dt id="DataProvider.networkdataprovider.KivyClockSimulator.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.KivyClockSimulator.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DataProvider.networkdataprovider.KivyClockSimulator.startMainLoopSimulation">
+<code class="descname">startMainLoopSimulation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.KivyClockSimulator.startMainLoopSimulation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Spawn a clock-ticking thread.  Make sure to call
 stopKivyMainLoopSimulation() when you are done with it.</p>
-<p>This is probaly a horrible idea</p>
+<p>This is probably a horrible idea</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="DataProvider.dataprovider.KivyClockSimulator.stopMainLoopSimulation">
-<code class="descname">stopMainLoopSimulation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.KivyClockSimulator.stopMainLoopSimulation" title="Permalink to this definition">¶</a></dt>
+<dt id="DataProvider.networkdataprovider.KivyClockSimulator.stopMainLoopSimulation">
+<code class="descname">stopMainLoopSimulation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.KivyClockSimulator.stopMainLoopSimulation" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
-<dt id="DataProvider.dataprovider.NetworkDataProvider">
-<em class="property">class </em><code class="descclassname">DataProvider.dataprovider.</code><code class="descname">NetworkDataProvider</code><span class="sig-paren">(</span><em>url=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.NetworkDataProvider" title="Permalink to this definition">¶</a></dt>
+<dt id="DataProvider.networkdataprovider.NetworkDataProvider">
+<em class="property">class </em><code class="descclassname">DataProvider.networkdataprovider.</code><code class="descname">NetworkDataProvider</code><span class="sig-paren">(</span><em>url=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.NetworkDataProvider" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../modules.html#DataProvider.dataprovider.DataProvider" title="DataProvider.dataprovider.DataProvider"><code class="xref py py-class docutils literal"><span class="pre">DataProvider.dataprovider.DataProvider</span></code></a></p>
 <p>The DataService class provides a base class for any remote service such as
 oData or soap.</p>
 <dl class="method">
-<dt id="DataProvider.dataprovider.NetworkDataProvider.setBasicAuth">
-<code class="descname">setBasicAuth</code><span class="sig-paren">(</span><em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.NetworkDataProvider.setBasicAuth" title="Permalink to this definition">¶</a></dt>
+<dt id="DataProvider.networkdataprovider.NetworkDataProvider.setBasicAuth">
+<code class="descname">setBasicAuth</code><span class="sig-paren">(</span><em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.NetworkDataProvider.setBasicAuth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Once set, every request sent to the server will append a base-64
 encoded basicAuth header encoded with the provided username and password.</p>
 </dd></dl>
@@ -173,14 +186,33 @@ encoded basicAuth header encoded with the provided username and password.</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="DataProvider.dataprovider.ODataProvider">
-<em class="property">class </em><code class="descclassname">DataProvider.dataprovider.</code><code class="descname">ODataProvider</code><span class="sig-paren">(</span><em>url=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.ODataProvider" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../modules.html#DataProvider.dataprovider.NetworkDataProvider" title="DataProvider.dataprovider.NetworkDataProvider"><code class="xref py py-class docutils literal"><span class="pre">DataProvider.dataprovider.NetworkDataProvider</span></code></a></p>
+<dt id="DataProvider.networkdataprovider.ODataParser">
+<em class="property">class </em><code class="descclassname">DataProvider.networkdataprovider.</code><code class="descname">ODataParser</code><a class="headerlink" href="#DataProvider.networkdataprovider.ODataParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>HTTP Response goes in, Entity goes out</p>
+<dl class="classmethod">
+<dt id="DataProvider.networkdataprovider.ODataParser.parseEntities">
+<em class="property">classmethod </em><code class="descname">parseEntities</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.ODataParser.parseEntities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse many entities</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="DataProvider.networkdataprovider.ODataParser.parseEntity">
+<em class="property">classmethod </em><code class="descname">parseEntity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.ODataParser.parseEntity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a single entity</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="DataProvider.networkdataprovider.ODataProvider">
+<em class="property">class </em><code class="descclassname">DataProvider.networkdataprovider.</code><code class="descname">ODataProvider</code><span class="sig-paren">(</span><em>url=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.ODataProvider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../modules.html#DataProvider.networkdataprovider.NetworkDataProvider" title="DataProvider.networkdataprovider.NetworkDataProvider"><code class="xref py py-class docutils literal"><span class="pre">DataProvider.networkdataprovider.NetworkDataProvider</span></code></a></p>
 <p>ODataProvider interfaces with a remote oData service.  Data from requests
 are returned as an Entity or a set of Entities.</p>
 <dl class="method">
-<dt id="DataProvider.dataprovider.ODataProvider.connect">
-<code class="descname">connect</code><span class="sig-paren">(</span><em>url</em>, <em>username</em>, <em>password</em>, <em>on_success=None</em>, <em>on_failure=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.ODataProvider.connect" title="Permalink to this definition">¶</a></dt>
+<dt id="DataProvider.networkdataprovider.ODataProvider.connect">
+<code class="descname">connect</code><span class="sig-paren">(</span><em>url</em>, <em>username</em>, <em>password</em>, <em>on_success=None</em>, <em>on_failure=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.ODataProvider.connect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Provides the kivy service with the target URL as well as credentials for
 basic authentication.  This also verifies that the username and password are
 valid credentials by attempting to pull the metadata from the target SAP
@@ -188,26 +220,30 @@ gateway service.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="DataProvider.dataprovider.ODataProvider.query">
-<code class="descname">query</code><span class="sig-paren">(</span><em>path</em>, <em>method='GET'</em>, <em>on_success=None</em>, <em>on_failure=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.ODataProvider.query" title="Permalink to this definition">¶</a></dt>
+<dt id="DataProvider.networkdataprovider.ODataProvider.query">
+<code class="descname">query</code><span class="sig-paren">(</span><em>path</em>, <em>method='GET'</em>, <em>on_success=None</em>, <em>on_failure=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.ODataProvider.query" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines basic behavior on getEntity or getEntitySet.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
-<dt id="DataProvider.dataprovider.SoapProvider">
-<em class="property">class </em><code class="descclassname">DataProvider.dataprovider.</code><code class="descname">SoapProvider</code><span class="sig-paren">(</span><em>url=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.SoapProvider" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../modules.html#DataProvider.dataprovider.NetworkDataProvider" title="DataProvider.dataprovider.NetworkDataProvider"><code class="xref py py-class docutils literal"><span class="pre">DataProvider.dataprovider.NetworkDataProvider</span></code></a></p>
+<dt id="DataProvider.networkdataprovider.SoapProvider">
+<em class="property">class </em><code class="descclassname">DataProvider.networkdataprovider.</code><code class="descname">SoapProvider</code><span class="sig-paren">(</span><em>url=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.SoapProvider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../modules.html#DataProvider.networkdataprovider.NetworkDataProvider" title="DataProvider.networkdataprovider.NetworkDataProvider"><code class="xref py py-class docutils literal"><span class="pre">DataProvider.networkdataprovider.NetworkDataProvider</span></code></a></p>
+<dl class="attribute">
+<dt id="DataProvider.networkdataprovider.SoapProvider.can_write">
+<code class="descname">can_write</code><em class="property"> = False</em><a class="headerlink" href="#DataProvider.networkdataprovider.SoapProvider.can_write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DataProvider.networkdataprovider.SoapProvider.getEntity">
+<code class="descname">getEntity</code><span class="sig-paren">(</span><em>action</em>, <em>key</em>, <em>value</em>, <em>on_success=None</em>, <em>on_failure=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.SoapProvider.getEntity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
-</div>
-<div class="section" id="dataprovider-parser-module">
-<h2>DataProvider.parser module<a class="headerlink" href="#dataprovider-parser-module" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="module-DataProvider">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-DataProvider" title="Permalink to this headline">¶</a></h2>
-<p>DataProvider is a package designed to represent OData and Soap responses as python objects.</p>
+<p>DataProvider.parser module</p>
 </div>
 </div>
 
@@ -221,9 +257,9 @@ gateway service.</p>
   <ul>
 <li><a class="reference internal" href="#">DataProvider package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-DataProvider.dataprovider">DataProvider.dataprovider module</a></li>
-<li><a class="reference internal" href="#dataprovider-parser-module">DataProvider.parser module</a></li>
 <li><a class="reference internal" href="#module-DataProvider">Module contents</a></li>
+<li><a class="reference internal" href="#module-DataProvider.dataprovider">DataProvider.dataprovider module</a></li>
+<li><a class="reference internal" href="#id1">DataProvider.dataprovider module</a></li>
 </ul>
 </li>
 </ul>

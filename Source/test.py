@@ -2,18 +2,29 @@
 from DataProvider import dataprovider  # @UnresolvedImport
 
 dp = dataprovider.JSONDataProvider('test.json')
+
 myEntity = dataprovider.Entity(
-        id          = 'test', 
+        key          = 'test',
+        data_provider = dp,
         properties  = {
-                'a': '1', 
-                'b': '2'
+                'a': [1, 2, 3], 
+                'b': 2
             }
     )
 
-#dp.saveEntity(myEntity)
+subEntity = dataprovider.Entity(
+        key          = 'subEntity', 
+        properties  = {
+                'a': 1, 
+                'b': 2
+            }
+    )
 
-#print myEntity
+myEntity['sub'] = subEntity
 
-newEntity = dp.getEntity('test')
-print newEntity
+print myEntity.sub
+
+myEntity.save()
+
+#print dp.getEntity('test').sub
 

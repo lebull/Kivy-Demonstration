@@ -54,6 +54,14 @@
             
   <div class="section" id="modules">
 <h1>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-DataProvider.entity">
+<span id="entity"></span><h2>Entity<a class="headerlink" href="#module-DataProvider.entity" title="Permalink to this headline">¶</a></h2>
+<p>Entity holds data.  Data good.</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+</div>
 <div class="section" id="module-DataProvider.dataprovider">
 <span id="dataprovider"></span><h2>DataProvider<a class="headerlink" href="#module-DataProvider.dataprovider" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -63,54 +71,63 @@
 </dd></dl>
 
 <dl class="class">
-<dt id="DataProvider.dataprovider.Entity">
-<em class="property">class </em><code class="descclassname">DataProvider.dataprovider.</code><code class="descname">Entity</code><span class="sig-paren">(</span><em>id=None</em>, <em>properties=None</em>, <em>data_provider=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.Entity" title="Permalink to this definition">¶</a></dt>
-<dd><p>Example of overloading __getatr__ and __setattr__
-This example creates a dictionary where members can be accessed as attributes
-<a class="reference external" href="http://code.activestate.com/recipes/389916-example-setattr-getattr-overloading/">http://code.activestate.com/recipes/389916-example-setattr-getattr-overloading/</a></p>
+<dt id="DataProvider.dataprovider.JSONDataProvider">
+<em class="property">class </em><code class="descclassname">DataProvider.dataprovider.</code><code class="descname">JSONDataProvider</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.JSONDataProvider" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dataprovider which is kept locally as a json file.</p>
 <dl class="method">
-<dt id="DataProvider.dataprovider.Entity.create">
-<code class="descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.Entity.create" title="Permalink to this definition">¶</a></dt>
-<dd><p>Saves a copy of an entity&#8217;s</p>
-</dd></dl>
-
-<dl class="classmethod">
-<dt id="DataProvider.dataprovider.Entity.jsonDecode">
-<em class="property">classmethod </em><code class="descname">jsonDecode</code><span class="sig-paren">(</span><em>json_data</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.Entity.jsonDecode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a json representation of an entity and returns it as an Entity object.</p>
+<dt id="DataProvider.dataprovider.JSONDataProvider.addEntity">
+<code class="descname">addEntity</code><span class="sig-paren">(</span><em>entity=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.JSONDataProvider.addEntity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an entity.  If no key is present, a key will be generated.  Returns the added Entity.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="DataProvider.dataprovider.Entity.jsonEncode">
-<code class="descname">jsonEncode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.Entity.jsonEncode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a json representation of an entity.</p>
+<dt id="DataProvider.dataprovider.JSONDataProvider.createEntity">
+<code class="descname">createEntity</code><span class="sig-paren">(</span><em>properties=None</em>, <em>key=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.JSONDataProvider.createEntity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an entity in our database.  Returns an Entity.  If no key is present, a key will be generated.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DataProvider.dataprovider.JSONDataProvider.getEntities">
+<code class="descname">getEntities</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.JSONDataProvider.getEntities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return many entities.  Will need a filter.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DataProvider.dataprovider.JSONDataProvider.getEntity">
+<code class="descname">getEntity</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.JSONDataProvider.getEntity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns False if no entity was found.  Loads the database if it has not been yet.</p>
 </dd></dl>
 
 </dd></dl>
 
+</div>
+<div class="section" id="networkdataprovider">
+<h2>NetworkDataProvider<a class="headerlink" href="#networkdataprovider" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-DataProvider.networkdataprovider"></span><p>It&#8217;s dataprovider, but networked</p>
 <dl class="class">
-<dt id="DataProvider.dataprovider.KivyClockSimulator">
-<em class="property">class </em><code class="descclassname">DataProvider.dataprovider.</code><code class="descname">KivyClockSimulator</code><span class="sig-paren">(</span><em>group=None</em>, <em>target=None</em>, <em>name=None</em>, <em>args=()</em>, <em>kwargs=None</em>, <em>verbose=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.KivyClockSimulator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Since Kivy is built to be asynchronous, we need to have kivy&#8217;s
+<dt id="DataProvider.networkdataprovider.KivyClockSimulator">
+<em class="property">class </em><code class="descclassname">DataProvider.networkdataprovider.</code><code class="descname">KivyClockSimulator</code><span class="sig-paren">(</span><em>network_providers=[]</em>, <em>stop_when_requests_done=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.KivyClockSimulator" title="Permalink to this definition">¶</a></dt>
+<dd><p>A helper class for testing.</p>
+<p>Since Kivy is built to be asynchronous, we need to have kivy&#8217;s
 internal clock ticking.</p>
 <dl class="method">
-<dt id="DataProvider.dataprovider.KivyClockSimulator.startMainLoopSimulation">
-<code class="descname">startMainLoopSimulation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.KivyClockSimulator.startMainLoopSimulation" title="Permalink to this definition">¶</a></dt>
+<dt id="DataProvider.networkdataprovider.KivyClockSimulator.startMainLoopSimulation">
+<code class="descname">startMainLoopSimulation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.KivyClockSimulator.startMainLoopSimulation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Spawn a clock-ticking thread.  Make sure to call
 stopKivyMainLoopSimulation() when you are done with it.</p>
-<p>This is probaly a horrible idea</p>
+<p>This is probably a horrible idea</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
-<dt id="DataProvider.dataprovider.NetworkDataProvider">
-<em class="property">class </em><code class="descclassname">DataProvider.dataprovider.</code><code class="descname">NetworkDataProvider</code><span class="sig-paren">(</span><em>url=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.NetworkDataProvider" title="Permalink to this definition">¶</a></dt>
+<dt id="DataProvider.networkdataprovider.NetworkDataProvider">
+<em class="property">class </em><code class="descclassname">DataProvider.networkdataprovider.</code><code class="descname">NetworkDataProvider</code><span class="sig-paren">(</span><em>url=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.NetworkDataProvider" title="Permalink to this definition">¶</a></dt>
 <dd><p>The DataService class provides a base class for any remote service such as
 oData or soap.</p>
 <dl class="method">
-<dt id="DataProvider.dataprovider.NetworkDataProvider.setBasicAuth">
-<code class="descname">setBasicAuth</code><span class="sig-paren">(</span><em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.NetworkDataProvider.setBasicAuth" title="Permalink to this definition">¶</a></dt>
+<dt id="DataProvider.networkdataprovider.NetworkDataProvider.setBasicAuth">
+<code class="descname">setBasicAuth</code><span class="sig-paren">(</span><em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.NetworkDataProvider.setBasicAuth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Once set, every request sent to the server will append a base-64
 encoded basicAuth header encoded with the provided username and password.</p>
 </dd></dl>
@@ -118,13 +135,31 @@ encoded basicAuth header encoded with the provided username and password.</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="DataProvider.dataprovider.ODataProvider">
-<em class="property">class </em><code class="descclassname">DataProvider.dataprovider.</code><code class="descname">ODataProvider</code><span class="sig-paren">(</span><em>url=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.ODataProvider" title="Permalink to this definition">¶</a></dt>
+<dt id="DataProvider.networkdataprovider.ODataParser">
+<em class="property">class </em><code class="descclassname">DataProvider.networkdataprovider.</code><code class="descname">ODataParser</code><a class="headerlink" href="#DataProvider.networkdataprovider.ODataParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>HTTP Response goes in, Entity goes out</p>
+<dl class="classmethod">
+<dt id="DataProvider.networkdataprovider.ODataParser.parseEntities">
+<em class="property">classmethod </em><code class="descname">parseEntities</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.ODataParser.parseEntities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse many entities</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="DataProvider.networkdataprovider.ODataParser.parseEntity">
+<em class="property">classmethod </em><code class="descname">parseEntity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.ODataParser.parseEntity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a single entity</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="DataProvider.networkdataprovider.ODataProvider">
+<em class="property">class </em><code class="descclassname">DataProvider.networkdataprovider.</code><code class="descname">ODataProvider</code><span class="sig-paren">(</span><em>url=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.ODataProvider" title="Permalink to this definition">¶</a></dt>
 <dd><p>ODataProvider interfaces with a remote oData service.  Data from requests
 are returned as an Entity or a set of Entities.</p>
 <dl class="method">
-<dt id="DataProvider.dataprovider.ODataProvider.connect">
-<code class="descname">connect</code><span class="sig-paren">(</span><em>url</em>, <em>username</em>, <em>password</em>, <em>on_success=None</em>, <em>on_failure=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.ODataProvider.connect" title="Permalink to this definition">¶</a></dt>
+<dt id="DataProvider.networkdataprovider.ODataProvider.connect">
+<code class="descname">connect</code><span class="sig-paren">(</span><em>url</em>, <em>username</em>, <em>password</em>, <em>on_success=None</em>, <em>on_failure=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.ODataProvider.connect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Provides the kivy service with the target URL as well as credentials for
 basic authentication.  This also verifies that the username and password are
 valid credentials by attempting to pull the metadata from the target SAP
@@ -132,41 +167,13 @@ gateway service.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="DataProvider.dataprovider.ODataProvider.query">
-<code class="descname">query</code><span class="sig-paren">(</span><em>path</em>, <em>method='GET'</em>, <em>on_success=None</em>, <em>on_failure=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.ODataProvider.query" title="Permalink to this definition">¶</a></dt>
+<dt id="DataProvider.networkdataprovider.ODataProvider.query">
+<code class="descname">query</code><span class="sig-paren">(</span><em>path</em>, <em>method='GET'</em>, <em>on_success=None</em>, <em>on_failure=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.networkdataprovider.ODataProvider.query" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines basic behavior on getEntity or getEntitySet.</p>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-DataProvider.dataparser">
-<span id="dataparser"></span><h2>DataParser<a class="headerlink" href="#module-DataProvider.dataparser" title="Permalink to this headline">¶</a></h2>
-<p>The dataparser module contains objects to translate raw http responses to usable python
-objects.  oData entities are represented by ResultEntity objects.</p>
-<p>TODO: BEAUTIFUL SOUP</p>
-<dl class="class">
-<dt id="DataProvider.dataparser.ODataParser">
-<em class="property">class </em><code class="descclassname">DataProvider.dataparser.</code><code class="descname">ODataParser</code><a class="headerlink" href="#DataProvider.dataparser.ODataParser" title="Permalink to this definition">¶</a></dt>
-<dd><p>ODataParser is a static object that parses OData responses into python objects.</p>
-<dl class="classmethod">
-<dt id="DataProvider.dataparser.ODataParser.parseEntries">
-<em class="property">classmethod </em><code class="descname">parseEntries</code><span class="sig-paren">(</span><em>oData</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataparser.ODataParser.parseEntries" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse multiple entries out of raw oData.</p>
-</dd></dl>
-
-<dl class="classmethod">
-<dt id="DataProvider.dataparser.ODataParser.parseEntry">
-<em class="property">classmethod </em><code class="descname">parseEntry</code><span class="sig-paren">(</span><em>response</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataparser.ODataParser.parseEntry" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse a single entry out of raw oData.</p>
-</dd></dl>
-
-</dd></dl>
-
-<div class="toctree-wrapper compound">
-<ul class="simple">
-</ul>
-</div>
 </div>
 </div>
 
@@ -179,8 +186,9 @@ objects.  oData entities are represented by ResultEntity objects.</p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Modules</a><ul>
+<li><a class="reference internal" href="#module-DataProvider.entity">Entity</a></li>
 <li><a class="reference internal" href="#module-DataProvider.dataprovider">DataProvider</a></li>
-<li><a class="reference internal" href="#module-DataProvider.dataparser">DataParser</a></li>
+<li><a class="reference internal" href="#networkdataprovider">NetworkDataProvider</a></li>
 </ul>
 </li>
 </ul>

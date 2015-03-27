@@ -1,17 +1,23 @@
 Modules
 ==================
 
+Entity
+------------
+.. automodule:: DataProvider.entity
+   :members:
+   
+.. toctree::
+   :maxdepth: 4
+
 DataProvider
 ------------
 
 .. automodule:: DataProvider.dataprovider
    :members:
    
-DataParser
+NetworkDataProvider
 ------------
-.. automodule:: DataProvider.dataparser
+
+.. automodule:: DataProvider.networkdataprovider
    :members:
-   
-.. toctree::
-   :maxdepth: 4
 

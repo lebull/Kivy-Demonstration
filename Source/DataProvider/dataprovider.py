@@ -1,84 +1,9 @@
 #from bs4 import BeautifulSoup
+#TODO: Proper docs? http://stackoverflow.com/questions/7500615/autogenerate-dummy-documentation-in-the-source-code-for-python-in-eclipse
 
 import json
 
-class Entity(dict):
-    """Example of overloading __getatr__ and __setattr__
-    This example creates a dictionary where members can be accessed as attributes
-    http://code.activestate.com/recipes/389916-example-setattr-getattr-overloading/
-    """
-    def __init__(self, id = None, properties=None, data_provider = None):
-
-        #Parent DataProvider
-        self.data_provider = data_provider
-        self.id = id
-
-        #Initial Attributes
-        if properties is None:
-            properties = {}
-        # set any attributes here - before initialisation
-        # these remain as normal attributes
-
-        dict.__init__(self, properties)
-        self.__initialised = True
-        # after initialisation, setting attributes is the same as setting an item
-
-    def __getattr__(self, item):
-        """Maps values to attributes.
-        Only called if there *isn't* an attribute with this name
-        """
-        try:
-            return self.__getitem__(item)
-        except KeyError:
-            raise AttributeError(item)
-
-    def __setattr__(self, item, value):
-        """Maps attributes to values.
-        Only if we are initialised
-        """
-        if not self.__dict__.has_key('_attrExample__initialised'):  # this test allows attributes to be set in the __init__ method
-            return dict.__setattr__(self, item, value)
-        elif self.__dict__.has_key(item):       # any normal attributes are handled normally
-            dict.__setattr__(self, item, value)
-        else:
-            self.__setitem__(item, value)
-
-    def jsonEncode(self):
-        """Returns a json representation of an entity."""
-
-        return json.dumps(self.__dict__)
-
-    @classmethod
-    def jsonDecode(cls, json_data):
-        """Takes a json representation of an entity and returns it as an Entity object."""
-        data = json.loads(json_data)
-        return Entity(properties = data)
-        
-
-    def create(self):
-        """ Saves a copy of an entity's """
-        if(self.data_provider == None):
-            #TODO: Try/catch to save the entity through its data provider
-            pass
-        else:
-            #TODO: Throw error that entity has no parent data provider
-            pass
-
-    def save(self):
-        if(self.data_provider == None):
-            #TODO: Try/catch to save the entity through its data provider
-            pass
-        else:
-            #TODO: Throw error that entity has no parent data provider
-            pass
-
-    def delete(self):
-        if(self.data_provider == None):
-            #TODO: Try/catch to delete the entity through its data provider
-            pass
-        else:
-            #TODO: Throw error that entity has no parent data provider
-            pass
+from entity import Entity
 
 class DataProvider(object):
 
@@ -88,27 +13,63 @@ class DataProvider(object):
     def createEntity(self, entity):
         raise NotImplementedError()
 
-    def getEntity(self, id):
+    def getEntity(self, key):
         raise NotImplementedError()
 
     def getEntities(self):
         raise NotImplementedError()
 
-    def saveEntity(self, entity):
+    def _saveEntity(self, entity):
         raise NotImplementedError()
 
-    def deleteEntity(self, entity):
+    def _deleteEntity(self, key):
         raise NotImplementedError()
+    
+
+#     def create(self, properties = None):
+#         newEntity = Entity(properties = properties, data_provider = self)
+#         newEntity.save()
+#         return newEntity
+#      
+#     def retrieve(self, key):
+#         #TODO: Handle multiple
+#         try:
+#             return self.data[key]
+#         except ValueError:
+#             return False
+#      
+#     def update(self, key, properties):
+#         editEntity = self.getEntity(key)
+#         editEntity.__dict__ = dict(properties)
+#         editEntity.save()
+#         return editEntity
+#      
+#     def delete(self, key):
+#         try:
+#             del self.data[key]
+#         except ValueError:
+#             return False
+#          
+#         return True
+
 
 class JSONDataProvider(DataProvider):
     """A dataprovider which is kept locally as a json file."""
-
+    
     def __init__(self, filepath):
         self.filepath = filepath
         self.data = {}
+        self.loaded = False
         self._loadData()
 
+    def _saveData(self):
+        """Save the data to our json file"""
+        json_file = open(self.filepath, 'w+')
+        json.dump(self.data, json_file)
+        json_file.close()
+
     def _loadData(self):
+        """Loads all data from the json copy."""
         try:
             myFile = open(self.filepath, 'r')
             self.data = json.load(myFile)
@@ -117,59 +78,61 @@ class JSONDataProvider(DataProvider):
             pass
             #TODO: Do we wana handle this at all?
 
-    def _saveData(self):
-        json_file = open(self.filepath, 'w+')
-        json.dump(self.data, json_file)
-        json_file.close()
+    def createEntity(self, properties = None, key = None):
+        """Create an entity in our database.  Returns an Entity.  If no key is present, a key will be generated."""
+        return self.addEntity(Entity(properties = properties, key = key))
 
-    def getEntity(self, id):
-        "Returns False if no entity was found."
-        self._loadData()
-        entityProperties = self.data[id]
+    def addEntity(self, entity = None):
+        """Add an entity.  If no key is present, a key will be generated.  Returns the added Entity."""
+        #TODO: THIS IS SLOOOOWWWWWWWW.  Filter, Sort, and Add
+        keys = self.keys()
+        myKey = 0
+        
+        while myKey in keys:
+            myKey += 1
+            
+        entity.key = myKey
+        
+        entity.data_provider = self
+        
+        self[entity.key] = entity
+        
+        self._saveData()
+        
+        return entity #Needs to return entity so createEntity return it.
+        
 
-        return Entity(id = id, properties = entityProperties, data_provider = self)
+    def getEntity(self, key):
+        """Returns False if no entity was found.  Loads the database if it has not been yet."""
+        if not self.loaded:
+            self._loadData()
         try:
-            entityProperties = self.data[id]
+            jsonEntity = self.data[key]
         except ValueError:
             return False
         
-        return Entity(id = id, properties = entityProperties, data_provider = self)
+        entityProperties = jsonEntity
+        return Entity(key = key, properties = entityProperties, data_provider = self)
+    
+    def getEntities(self):
+        """Return many entities.  Will need a filter."""
+        #TODO: Implement getEntities
+        raise NotImplementedError
+        
 
-    def saveEntity(self, entity):
+    def _saveEntity(self, entity):
+        """Save a single entity.  Also saves the database."""
         entity.data_provider = self
-        if entity.id == None:
-            #TODO: Generate an ID
-            pass
-        self.data[entity.id] = entity
+
+        self.data[entity.key] = entity
 
         self._saveData()
         
-
+    def _deleteEntity(self, entity):
+        """Delete a single entity from the database.  Also saves the database."""
+        del self[entity.key]
+        self._saveData()
         
-    def create(self, properties = None):
-        newEntity = Entity(properties = properties, data_provider = self)
-        newEntity.save()
-        return newEntity
-    
-    def retrieve(self, id):
-        try:
-            return self.data[id]
-        except ValueError:
-            return False
-    
-    def update(self, id, properties):
-        editEntity = self.getEntity(id)
-        editEntity = dict(properties)
-        editEntity.save()
-        return editEntity
-    
-    def delete(self, id):
-        try:
-            del self.data[id]
-        except ValueError:
-            return False
-        
-        return True
 
 #TODO: SQLite provider
 
