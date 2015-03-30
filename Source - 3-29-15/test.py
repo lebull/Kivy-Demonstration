@@ -1,5 +1,5 @@
 
-from DataProvider import dataprovider
+from DataProvider import dataprovider  # @UnresolvedImport
 
 dp = dataprovider.JSONDataProvider('test.json')
 
@@ -22,9 +22,9 @@ subEntity = dataprovider.Entity(
 
 myEntity['sub'] = subEntity
 
-#print myEntity.sub
+print myEntity.sub
 
-#myEntity.save()
+myEntity.save()
 
 #print dp.getEntity('test').sub
 

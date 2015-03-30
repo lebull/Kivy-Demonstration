@@ -1,138 +1,124 @@
 #from bs4 import BeautifulSoup
 #TODO: Proper docs? http://stackoverflow.com/questions/7500615/autogenerate-dummy-documentation-in-the-source-code-for-python-in-eclipse
 
-import json
-
-from entity import Entity
+import logging
+from kivy.network.urlrequest import UrlRequest
 
 class DataProvider(object):
 
     """True if the dataprovider can create, update, and delete new entities."""
     can_write = False   
-
-    def createEntity(self, entity):
-        raise NotImplementedError()
-
-    def getEntity(self, key):
-        raise NotImplementedError()
-
-    def getEntities(self):
-        raise NotImplementedError()
-
-    def _saveEntity(self, entity):
-        raise NotImplementedError()
-
-    def _deleteEntity(self, key):
-        raise NotImplementedError()
     
+    #CRUD
+    #TODO: createEntity might be a little redundant.  Not sure what I think about it.
+    def createEntity(self, **kwargs):
+        if can_write:
+            raise NotImplementedError()
+        else:
+            #TODO: Proper error
+            raise Error('<classname> cannot write to its provider.')
 
-#     def create(self, properties = None):
-#         newEntity = Entity(properties = properties, data_provider = self)
-#         newEntity.save()
-#         return newEntity
-#      
-#     def retrieve(self, key):
-#         #TODO: Handle multiple
-#         try:
-#             return self.data[key]
-#         except ValueError:
-#             return False
-#      
-#     def update(self, key, properties):
-#         editEntity = self.getEntity(key)
-#         editEntity.__dict__ = dict(properties)
-#         editEntity.save()
-#         return editEntity
-#      
-#     def delete(self, key):
-#         try:
-#             del self.data[key]
-#         except ValueError:
-#             return False
-#          
-#         return True
+    def getEntity(self, **kwargs):
+        raise NotImplementedError()
 
+    def getEntities(self, **kwargs):
+        raise NotImplementedError()
 
-class JSONDataProvider(DataProvider):
-    """A dataprovider which is kept locally as a json file."""
-    
-    def __init__(self, filepath):
-        self.filepath = filepath
-        self.data = {}
-        self.loaded = False
-        self._loadData()
+    def _saveEntity(self, **kwargs):
+        if can_write:
+            raise NotImplementedError()
+        else:
+            raise Error('<classname> cannot write to its provider.')
 
-    def _saveData(self):
-        """Save the data to our json file"""
-        json_file = open(self.filepath, 'w+')
-        json.dump(self.data, json_file)
-        json_file.close()
-
-    def _loadData(self):
-        """Loads all data from the json copy."""
-        try:
-            myFile = open(self.filepath, 'r')
-            self.data = json.load(myFile)
-            myFile.close()
-        except IOError:
-            pass
-            #TODO: Do we wana handle this at all?
-
-    def createEntity(self, properties = None, key = None):
-        """Create an entity in our database.  Returns an Entity.  If no key is present, a key will be generated."""
-        return self.addEntity(Entity(properties = properties, key = key))
-
-    def addEntity(self, entity = None):
-        """Add an entity.  If no key is present, a key will be generated.  Returns the added Entity."""
-        #TODO: THIS IS SLOOOOWWWWWWWW.  Filter, Sort, and Add
-        keys = self.keys()
-        myKey = 0
-        
-        while myKey in keys:
-            myKey += 1
+    def _deleteEntity(self, **kwargs):
+        if can_write:
+            raise NotImplementedError()
+        else:
+            raise Error('<classname> cannot write to its provider.')
             
-        entity.key = myKey
-        
-        entity.data_provider = self
-        
-        self[entity.key] = entity
-        
-        self._saveData()
-        
-        return entity #Needs to return entity so createEntity return it.
-        
+class NetworkDataProvider(DataProvider):
+    """The DataService class provides a base class for any remote service such as
+    oData or soap."""
+    def __init__(self, url = None):
+        self.timeout = 15
+        self.pending_requests = 0
+        self.request_list = []
+        self.auth_header = {}
 
-    def getEntity(self, key):
-        """Returns False if no entity was found.  Loads the database if it has not been yet."""
-        if not self.loaded:
-            self._loadData()
-        try:
-            jsonEntity = self.data[key]
-        except ValueError:
-            return False
-        
-        entityProperties = jsonEntity
-        return Entity(key = key, properties = entityProperties, data_provider = self)
-    
-    def getEntities(self):
-        """Return many entities.  Will need a filter."""
-        #TODO: Implement getEntities
-        raise NotImplementedError
-        
+    def setBasicAuth(self, username, password):
+        """Once set, every request sent to the server will append a base-64
+        encoded basicAuth header encoded with the provided username and password."""
+        self.auth_header = {
+            'Authorization': 'Basic ' + ('%s:%s' % (
+            str(username), str(password))).encode('base-64'),
+            'Accept': '*/*'}
 
-    def _saveEntity(self, entity):
-        """Save a single entity.  Also saves the database."""
-        entity.data_provider = self
-
-        self.data[entity.key] = entity
-
-        self._saveData()
+    def _sendRequest(self, url, method, req_headers = {}, req_body = None, on_success = None, on_failure = None):
+        """Send a UrlRequest with the appropriate callbacks.
         
-    def _deleteEntity(self, entity):
-        """Delete a single entity from the database.  Also saves the database."""
-        del self[entity.key]
-        self._saveData()
+        @todo implement on_update
         
+        @param path
+        @type string
+        
+        @param method
+        @type string
+        
+        @param req_headers
+        @type dict
+        
+        @param req_body
+        @type string
+        
+        @param on_success
+        @type function
+        
+        @param on_failure
+        @type function
+        
+        """
+        def on_success_local(request, result):
+            logging.info("Request successful".format())
+            if on_success != None:
+                on_success(request, result)
+            self.pending_requests -= 1
+
+        def on_failure_local(request, result):
+            status = request.resp_status
+            if (status != None):
+                logging.warning("Request failed with status {}".format(request.resp_status))
+            else:
+                logging.warning("Request failed with no response")
+
+            if on_failure != None:
+                on_failure(request, result)
+            self.pending_requests -= 1
+                
+        # merging n dicts with dict comprehension 
+        #http://hoardedhomelyhints.dietbuddha.com/2013/04/python-expression-idiom-merging.html
+        req_headers = {k:v for d in (req_headers, self.auth_header) for k, v in d.iteritems()}
+
+        logging.info("Request: {} {}".format(method, url))
+
+        request = UrlRequest(
+                             url        = url,
+                             method     = method,
+                             req_headers= req_headers, #Combining dictionaries
+                             req_body   = req_body,
+                             on_success = on_success_local,
+                             on_failure = on_failure_local,
+                             on_error   = on_failure_local,
+                             timeout    = self.timeout,
+                             debug      = False)
+
+
+        self.request_list.append(request)
+        self.pending_requests += 1
+
+if __name__ == "__main__":
+    pass
+    #from kivy.clock import Clock
+    #If testing networkdataprovider, be sure to use the clock :D
 
 #TODO: SQLite provider
 
