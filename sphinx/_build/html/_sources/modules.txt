@@ -14,10 +14,24 @@ DataProvider
 
 .. automodule:: DataProvider.dataprovider
    :members:
+
+.. toctree::
+   :maxdepth: 4
    
-NetworkDataProvider
-------------
+SoapDataProvider
+----------------
 
-.. automodule:: DataProvider.networkdataprovider
+.. automodule:: DataProvider.soapDataProvider
    :members:
+   
+.. toctree::
+   :maxdepth: 4
+   
+KivyClockSimulator
+------------------
 
+.. automodule:: DataProvider.kivyClockSimulator
+   :members:
+   
+.. toctree::
+   :maxdepth: 4

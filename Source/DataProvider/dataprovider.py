@@ -2,21 +2,17 @@
 #TODO: Proper docs? http://stackoverflow.com/questions/7500615/autogenerate-dummy-documentation-in-the-source-code-for-python-in-eclipse
 
 import logging
+
+import time
+
 from kivy.network.urlrequest import UrlRequest
 
-class DataProvider(object):
+class CrudDataProvider(object):
 
-    """True if the dataprovider can create, update, and delete new entities."""
-    can_write = False   
-    
     #CRUD
     #TODO: createEntity might be a little redundant.  Not sure what I think about it.
     def createEntity(self, **kwargs):
-        if can_write:
-            raise NotImplementedError()
-        else:
-            #TODO: Proper error
-            raise Error('<classname> cannot write to its provider.')
+        raise NotImplementedError()
 
     def getEntity(self, **kwargs):
         raise NotImplementedError()
@@ -25,25 +21,25 @@ class DataProvider(object):
         raise NotImplementedError()
 
     def _saveEntity(self, **kwargs):
-        if can_write:
-            raise NotImplementedError()
-        else:
-            raise Error('<classname> cannot write to its provider.')
+        raise NotImplementedError()
 
     def _deleteEntity(self, **kwargs):
-        if can_write:
-            raise NotImplementedError()
-        else:
-            raise Error('<classname> cannot write to its provider.')
+        raise NotImplementedError()
             
-class NetworkDataProvider(DataProvider):
+class NetworkDataProvider(CrudDataProvider):
     """The DataService class provides a base class for any remote service such as
     oData or soap."""
+    
     def __init__(self, url = None):
+        """
+        :param url:
+        :type url: string
+        """
         self.timeout = 15
         self.pending_requests = 0
         self.request_list = []
         self.auth_header = {}
+        
 
     def setBasicAuth(self, username, password):
         """Once set, every request sent to the server will append a base-64
@@ -57,42 +53,51 @@ class NetworkDataProvider(DataProvider):
         """Send a UrlRequest with the appropriate callbacks.
         
         @todo implement on_update
+        :param path:
+        :param path:
+        :param method:
+        :param req_headers:
+        :param req_body:
+        :param on_success:
+        :param on_failure:
         
-        @param path
-        @type string
-        
-        @param method
-        @type string
-        
-        @param req_headers
-        @type dict
-        
-        @param req_body
-        @type string
-        
-        @param on_success
-        @type function
-        
-        @param on_failure
-        @type function
-        
+        :type path: string ladeda
+        :type path: string
+        :type method: string
+        :type req_headers: dict
+        :type req_body: string
+        :type on_success: function
+        :type on_failure: function
         """
+        
         def on_success_local(request, result):
-            logging.info("Request successful".format())
+            always_local(request, result)
             if on_success != None:
                 on_success(request, result)
-            self.pending_requests -= 1
 
         def on_failure_local(request, result):
+            always_local(request, result)
+            if on_failure != None:
+                on_failure(request, result)
+            
+        def always_local(request, result):
+            
+            #Print the return status to the log
             status = request.resp_status
+            
             if (status != None):
-                logging.warning("Request failed with status {}".format(request.resp_status))
+                if request.resp_status == 200:
+                    logging.info("Request completed successfully")
+                else:
+                    logging.warning("Request failed with status {}".format(request.resp_status))
             else:
                 logging.warning("Request failed with no response")
 
-            if on_failure != None:
-                on_failure(request, result)
+            #Subtract the number of pending requests.
             self.pending_requests -= 1
+            
+            if(self.pending_requests == 1):
+                self.clocksim.stop()
                 
         # merging n dicts with dict comprehension 
         #http://hoardedhomelyhints.dietbuddha.com/2013/04/python-expression-idiom-merging.html
@@ -100,20 +105,24 @@ class NetworkDataProvider(DataProvider):
 
         logging.info("Request: {} {}".format(method, url))
 
-        request = UrlRequest(
-                             url        = url,
+        request = UrlRequest(url        = url,
                              method     = method,
                              req_headers= req_headers, #Combining dictionaries
                              req_body   = req_body,
                              on_success = on_success_local,
                              on_failure = on_failure_local,
                              on_error   = on_failure_local,
-                             timeout    = self.timeout,
-                             debug      = False)
-
+                             timeout    = self.timeout)
 
         self.request_list.append(request)
+        
         self.pending_requests += 1
+        
+    def wait(self):
+        """Block until the dataprovider has no pending requests"""
+        while self.pending_requests > 0:
+            time.sleep(0.5)
+            
 
 if __name__ == "__main__":
     pass

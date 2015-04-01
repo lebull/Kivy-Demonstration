@@ -5,7 +5,7 @@ import time
 from kivy.clock import Clock
 
 
-class KivyClockSimulator(threading.Thread):
+class ClockSim(threading.Thread):
     """
     A helper class for testing.
     
@@ -23,42 +23,40 @@ class KivyClockSimulator(threading.Thread):
         self._run_clock = False
         self.network_providers = network_providers
         self.stop_when_requests_done = stop_when_requests_done
-    
-        self.callbacks = []
         
-        super(KivyClockSimulator, self).__init__(*kwargs)
+        super(ClockSim, self).__init__(*kwargs)
         
     def run(self, *args):
         while (self._run_clock):
-                
-                if(self.stop_when_requests_done 
-                   and self.checkRequestsRemain() == False):
-                    self.stopMainLoopSimulation()
-                    logging.info("All requests complete.  Stopping Kivy clock simulation.")
-                    
-                for f in self.callbacks:
-                    f()
-                    
-                Clock.tick()
-                time.sleep(0.1)
+
+            if(self.stop_when_requests_done
+               and len(self.network_providers)
+               and self.checkRequestsRemain() == False):
+                self.stop()
+                logging.info("All requests complete.  Stopping Kivy clock simulation.")
+                                
+            Clock.tick()
+            time.sleep(0.1)
                 
     def checkRequestsRemain(self):
+        """Check to see if there are any pending requests 
+        in the monitored NetworkDataProviders."""
         for provider in self.network_providers:
             if provider.pending_requests > 0:
                 return True
             
         return False
         
-    def startMainLoopSimulation(self):
+    def start(self, **kwargs):
         """Spawn a clock-ticking thread.  Make sure to call
-        stopKivyMainLoopSimulation() when you are done with it.
-
-        This is probably a horrible idea"""
-        self._run_clock = True
-        self.start()
-
-    def stopMainLoopSimulation(self):
-        self._run_clock = False
+        stop() when you are done with it."""
         
-    def addCallback(self, function):
-        self.callbacks.append(function)
+        if(self._run_clock == False):
+            self._run_clock = True
+            super(ClockSim, self).start(**kwargs)
+
+        
+    def stop(self):
+        """Stop the clock simulator"""
+        self._run_clock = False
+

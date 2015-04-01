@@ -1,9 +1,9 @@
 import json
-from dataprovider import DataProvider
+from dataprovider import CrudDataProvider
 from entity import Entity
 
 
-class JSONDataProvider(DataProvider):
+class JSONDataProvider(CrudDataProvider):
     """A dataprovider which is kept locally as a json file."""
     
     def __init__(self, filepath):

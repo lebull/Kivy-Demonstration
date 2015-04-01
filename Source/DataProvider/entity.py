@@ -1,18 +1,53 @@
 """
-Entity holds data.  Data good.
+Entities hold data.  Data is good.
 """
 
 #import json
 
 class Entity(dict):
+    """An Entity is an object created to hold general data allow data to be 
+    created, updated, or deleted from its corrisponding database.
+    
+    The Entity class inherits from python's native dictionary and the Entity's
+    properties are stored in that dictionary.
+
+        >>> apple = Entity()
+        >>> apple['color'] = red
+        
+    For convenience, you can also access an Entity's properties through attribute
+    access.
+    
+        >>> print apple.color
+    
+    Entities are spawned by DataProviders.
+    
+        >>> DataProvider().asdfasdf
+    
+    An entity can be created completely independently, but it's useful if it is
+    associated with an existing DataProvider.  This way, you can update or delete
+    the entity without any direct calls to its data provider.
+    
+    """
     
 #     Example of overloading __getatr__ and __setattr__
 #     This example creates a dictionary where members can be accessed as attributes
 #     http://code.activestate.com/recipes/389916-example-setattr-getattr-overloading/
     def __init__(self, properties=None, key = None, data_provider = None):
+        """
+        :param properties: A dictionary of initial properties.
+        :param key:
+        :param data_provider:
+        
+        :type properties: dict
+        :type key:
+        :type data_provider:  DataProvider
+        """
 
-        #Parent DataProvider
+        assert type(properties) == dict or properties == None
+
+        #: Parent DataProvider
         self.data_provider = data_provider
+        #: The key.  Not required.  Not sure if useful.
         self.key = key
 
         #Initial Attributes
@@ -44,12 +79,8 @@ class Entity(dict):
             self.__setitem__(item, value)
             
     def __str__(self):
-        returnString = ""
-        returnString += "Entity - key: {}\n".format(self.key)
-        
-        #Wow, this is a fun line...
-        returnString += "\n".join(["\t{}: {}".format(key, value) for key, value in self.iteritems()])
-        return returnString
+
+        return "Entity({})\n".format(self.key)
 
 #     def jsonEncode(self):
 #         """Returns a json representation of an entity."""
@@ -86,5 +117,25 @@ class Entity(dict):
         else:
             #TODO: Throw error that entity has no parent data provider
             print "No Data Provider"
+            
+    def prettyString(self, indent = 0):
+        """
+        :integer indent: The indent level for the string.  
+        You probably shouldn't use this, as it's typically used for recursion.
+        """
+        
+        returnString = ""
+        returnString += "Entity({})\n".format(self.key)
+        
+        #Wow, this is a fun line...
+        
+        for key, value in self.iteritems():
+            
+            if isinstance(value, Entity):
+                value = value.prettyString(indent + 1)
+             
+            returnString += "\t" * (indent + 1) + "{}: {}\n".format(key, value)
+            
+        return returnString
             
 #TODO: JSON Encoder and Decoder.
