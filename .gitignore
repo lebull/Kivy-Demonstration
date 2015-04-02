@@ -1,9 +1,12 @@
+#Just wana have a secret file -\o/- ~tdarsey
+*.secret
+
+#Lets keep unit tests to myself for now.
+test/
+
 #################
 ## Eclipse
 #################
-
-#Just wana have a secret file -\o/- ~tdarsey
-*.secret
 
 *.pydevproject
 .project

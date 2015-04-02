@@ -241,26 +241,6 @@ if __name__ == "__main__":
         
         dp.wait()
     
-    def testIPDirectory():
-        dp = SoapProvider("http://radssvcdev.ipaper.com/radssecurityws/wsmembership.asmx")
-        
-        
-        
-        #TODO: Have getActions() block until we have our actions from the wsdl.
-        for action in dp.getActions():
-            print action
-        
-        dp.query(action     = "GetUserFromActiveDirectory",
-                keys        = {"userid": "tdarsey"},
-                on_success  = print_entity)
-        
-        dp.query(action     = "GetCompanyDirectoryUserList",
-                keys        = {"userids": 'tdarsey'},
-                on_success  = print_entity)
-        
-        dp.wait()
-
-
     def main():
         clocksim = ClockSim()
         clocksim.start()

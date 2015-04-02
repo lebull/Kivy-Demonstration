@@ -20,10 +20,10 @@ import os
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #sys.path.insert(0, os.path.abspath('.'))
 
-#sys.path.insert(0, os.path.abspath('../'))
+sys.path.insert(0, os.path.abspath('../'))
 #sys.path.insert(0, 'C:/Users/TDARSEY/Desktop/Work/Tasks/Active/Kivy')
-sys.path.insert(0, 'C:/Users/TDARSEY/Desktop/Work/Tasks/Active/Kivy/Source/DataProvider')
-sys.path.insert(0, 'C:/Users/TDARSEY/Desktop/Work/Tasks/Active/Kivy/Source')
+#sys.path.insert(0, 'C:/Users/TDARSEY/Desktop/Work/Tasks/Active/Kivy/Source/DataProvider')
+#sys.path.insert(0, 'C:/Users/TDARSEY/Desktop/Work/Tasks/Active/Kivy/Source')
 
 #Dump from kivy's sys.path
 sys.path.insert(0, '')
