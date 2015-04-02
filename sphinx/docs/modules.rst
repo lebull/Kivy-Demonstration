@@ -1,7 +1,37 @@
-DataProvider
-============
+Modules
+==================
 
+Entity
+------------
+.. automodule:: DataProvider.entity
+   :members:
+   
 .. toctree::
    :maxdepth: 4
 
-   DataProvider
+DataProvider
+------------
+
+.. automodule:: DataProvider.dataprovider
+   :members:
+
+.. toctree::
+   :maxdepth: 4
+   
+SoapDataProvider
+----------------
+
+.. automodule:: DataProvider.soapDataProvider
+   :members:
+   
+.. toctree::
+   :maxdepth: 4
+   
+KivyClockSimulator
+------------------
+
+.. automodule:: DataProvider.kivyClockSimulator
+   :members:
+   
+.. toctree::
+   :maxdepth: 4

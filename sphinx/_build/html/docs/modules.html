@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>DataProvider &mdash; DataProvider 0.1 documentation</title>
+    <title>Modules &mdash; DataProvider 0.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -23,7 +23,9 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="DataProvider 0.1 documentation" href="../index.html" /> 
+    <link rel="top" title="DataProvider 0.1 documentation" href="../index.html" />
+    <link rel="next" title="Project Summary" href="project.html" />
+    <link rel="prev" title="Welcome to DataProvider’s documentation!" href="../index.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -35,6 +37,12 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="project.html" title="Project Summary"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Welcome to DataProvider’s documentation!"
+             accesskey="P">previous</a> |</li>
         <li><a href="../index.html">DataProvider 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -44,11 +52,186 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="dataprovider">
-<h1>DataProvider<a class="headerlink" href="#dataprovider" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="modules">
+<h1>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-DataProvider.entity">
+<span id="entity"></span><h2>Entity<a class="headerlink" href="#module-DataProvider.entity" title="Permalink to this headline">¶</a></h2>
+<p>Entities hold data.  Data is good.</p>
+<dl class="class">
+<dt id="DataProvider.entity.Entity">
+<em class="property">class </em><code class="descclassname">DataProvider.entity.</code><code class="descname">Entity</code><span class="sig-paren">(</span><em>properties=None</em>, <em>key=None</em>, <em>data_provider=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.entity.Entity" title="Permalink to this definition">¶</a></dt>
+<dd><p>An Entity is an object created to hold general data allow data to be 
+created, updated, or deleted from its corrisponding database.</p>
+<p>The Entity class inherits from python&#8217;s native dictionary and the Entity&#8217;s
+properties are stored in that dictionary.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">apple</span> <span class="o">=</span> <span class="n">Entity</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">apple</span><span class="p">[</span><span class="s">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">red</span>
+</pre></div>
+</div>
+<p>For convenience, you can also access an Entity&#8217;s properties through attribute
+access.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">apple</span><span class="o">.</span><span class="n">color</span>
+</pre></div>
+</div>
+<p>Entities are spawned by DataProviders.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">DataProvider</span><span class="p">()</span><span class="o">.</span><span class="n">asdfasdf</span>
+</pre></div>
+</div>
+<p>An entity can be created completely independently, but it&#8217;s useful if it is
+associated with an existing DataProvider.  This way, you can update or delete
+the entity without any direct calls to its data provider.</p>
+<dl class="attribute">
+<dt id="DataProvider.entity.Entity.data_provider">
+<code class="descname">data_provider</code><em class="property"> = None</em><a class="headerlink" href="#DataProvider.entity.Entity.data_provider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parent DataProvider</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="DataProvider.entity.Entity.key">
+<code class="descname">key</code><em class="property"> = None</em><a class="headerlink" href="#DataProvider.entity.Entity.key" title="Permalink to this definition">¶</a></dt>
+<dd><p>The key.  Not required.  Not sure if useful.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DataProvider.entity.Entity.save">
+<code class="descname">save</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.entity.Entity.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the entity in its assigned database.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DataProvider.entity.Entity.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.entity.Entity.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the entity from its assigned database.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DataProvider.entity.Entity.prettyString">
+<code class="descname">prettyString</code><span class="sig-paren">(</span><em>indent=0</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.entity.Entity.prettyString" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>indent</strong> (<em>int</em>) &#8211; The indent level for the string.</td>
+</tr>
+</tbody>
+</table>
+<p>You probably shouldn&#8217;t use this, as it&#8217;s typically used for recursion.</p>
+</dd></dl>
+
+</dd></dl>
+
 <div class="toctree-wrapper compound">
 <ul class="simple">
 </ul>
+</div>
+</div>
+<div class="section" id="module-DataProvider.dataprovider">
+<span id="dataprovider"></span><h2>DataProvider<a class="headerlink" href="#module-DataProvider.dataprovider" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="DataProvider.dataprovider.NetworkDataProvider">
+<em class="property">class </em><code class="descclassname">DataProvider.dataprovider.</code><code class="descname">NetworkDataProvider</code><span class="sig-paren">(</span><em>url=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.NetworkDataProvider" title="Permalink to this definition">¶</a></dt>
+<dd><p>The DataService class provides a base class for any remote service such as
+oData or soap.</p>
+<dl class="method">
+<dt id="DataProvider.dataprovider.NetworkDataProvider.setBasicAuth">
+<code class="descname">setBasicAuth</code><span class="sig-paren">(</span><em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.NetworkDataProvider.setBasicAuth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Once set, every request sent to the server will append a base-64
+encoded basicAuth header encoded with the provided username and password.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DataProvider.dataprovider.NetworkDataProvider.wait">
+<code class="descname">wait</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.NetworkDataProvider.wait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Block until the dataprovider has no pending requests</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+</div>
+<div class="section" id="module-DataProvider.soapDataProvider">
+<span id="soapdataprovider"></span><h2>SoapDataProvider<a class="headerlink" href="#module-DataProvider.soapDataProvider" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="DataProvider.soapDataProvider.SoapRequestBuilder">
+<em class="property">class </em><code class="descclassname">DataProvider.soapDataProvider.</code><code class="descname">SoapRequestBuilder</code><span class="sig-paren">(</span><em>url</em>, <em>action_url</em>, <em>keys</em>, <em>version='1.2'</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.soapDataProvider.SoapRequestBuilder" title="Permalink to this definition">¶</a></dt>
+<dd><p>A soapRequestBuilder object represents a single soap request.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="DataProvider.soapDataProvider.SoapResponseParser">
+<em class="property">class </em><code class="descclassname">DataProvider.soapDataProvider.</code><code class="descname">SoapResponseParser</code><a class="headerlink" href="#DataProvider.soapDataProvider.SoapResponseParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static class to parse incoming soap responses.</p>
+<dl class="classmethod">
+<dt id="DataProvider.soapDataProvider.SoapResponseParser.getActionsFromWsdl">
+<em class="property">classmethod </em><code class="descname">getActionsFromWsdl</code><span class="sig-paren">(</span><em>wsdl_data</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.soapDataProvider.SoapResponseParser.getActionsFromWsdl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses out soapaction&#8217;s from WSDL files.  This will be used to get an
+action&#8217;s url from the action itself.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">String wsdl_data:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="DataProvider.soapDataProvider.SoapResponseParser.getEntityFromQuery">
+<em class="property">classmethod </em><code class="descname">getEntityFromQuery</code><span class="sig-paren">(</span><em>result</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.soapDataProvider.SoapResponseParser.getEntityFromQuery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a soap response into an entity or entities.  
+It will return a tree of entities, but the leaf nodes (hopefully
+a collection of attributes) will be represented as dictionaries.  
+Otherwise, you would have an entity for every individual attribute.</p>
+<p>&#64;param result:
+&#64;type string:</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+</div>
+<div class="section" id="module-DataProvider.kivyClockSimulator">
+<span id="kivyclocksimulator"></span><h2>KivyClockSimulator<a class="headerlink" href="#module-DataProvider.kivyClockSimulator" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="DataProvider.kivyClockSimulator.ClockSim">
+<em class="property">class </em><code class="descclassname">DataProvider.kivyClockSimulator.</code><code class="descname">ClockSim</code><span class="sig-paren">(</span><em>network_providers=[]</em>, <em>stop_when_requests_done=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.kivyClockSimulator.ClockSim" title="Permalink to this definition">¶</a></dt>
+<dd><p>A helper class for testing.</p>
+<p>Since Kivy is built to be asynchronous, we need to have kivy&#8217;s
+internal clock ticking.</p>
+<dl class="method">
+<dt id="DataProvider.kivyClockSimulator.ClockSim.checkRequestsRemain">
+<code class="descname">checkRequestsRemain</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.kivyClockSimulator.ClockSim.checkRequestsRemain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check to see if there are any pending requests 
+in the monitored NetworkDataProviders.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DataProvider.kivyClockSimulator.ClockSim.start">
+<code class="descname">start</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.kivyClockSimulator.ClockSim.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Spawn a clock-ticking thread.  Make sure to call
+stop() when you are done with it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DataProvider.kivyClockSimulator.ClockSim.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.kivyClockSimulator.ClockSim.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the clock simulator</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
 </div>
 </div>
 
@@ -58,6 +241,23 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Modules</a><ul>
+<li><a class="reference internal" href="#module-DataProvider.entity">Entity</a></li>
+<li><a class="reference internal" href="#module-DataProvider.dataprovider">DataProvider</a></li>
+<li><a class="reference internal" href="#module-DataProvider.soapDataProvider">SoapDataProvider</a></li>
+<li><a class="reference internal" href="#module-DataProvider.kivyClockSimulator">KivyClockSimulator</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../index.html"
+                        title="previous chapter">Welcome to DataProvider&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="project.html"
+                        title="next chapter">Project Summary</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -91,6 +291,12 @@
         <li class="right" >
           <a href="../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="project.html" title="Project Summary"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Welcome to DataProvider’s documentation!"
+             >previous</a> |</li>
         <li><a href="../index.html">DataProvider 0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>

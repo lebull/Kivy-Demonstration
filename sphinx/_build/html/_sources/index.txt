@@ -17,8 +17,8 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   modules
-   project
+   docs/modules
+   docs/project
 
 
 Indices and tables

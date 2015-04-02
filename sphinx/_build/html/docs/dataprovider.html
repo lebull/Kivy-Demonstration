@@ -53,7 +53,7 @@
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-DataProvider" title="Permalink to this headline">¶</a></h2>
 <p>DataProvider is a package designed to represent OData and Soap responses as python objects.</p>
 <hr class="docutils" />
-<span class="target" id="module-DataProvider.entity"></span><p>Entity holds data.  Data good.</p>
+<span class="target" id="module-DataProvider.entity"></span><p>Entities hold data.  Data is good.</p>
 <dl class="class">
 <dt id="DataProvider.entity.Entity">
 <em class="property">class </em><code class="descclassname">DataProvider.entity.</code><code class="descname">Entity</code><span class="sig-paren">(</span><em>properties=None</em>, <em>key=None</em>, <em>data_provider=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.entity.Entity" title="Permalink to this definition">¶</a></dt>
@@ -91,20 +91,6 @@ the entity without any direct calls to its data provider.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="DataProvider.entity.Entity.prettyString">
-<code class="descname">prettyString</code><span class="sig-paren">(</span><em>indent=0</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.entity.Entity.prettyString" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Integer indent:</th><td class="field-body">The indent level for the string.</td>
-</tr>
-</tbody>
-</table>
-<p>You probably shouldn&#8217;t use this, as it&#8217;s typically used for recursion.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="DataProvider.entity.Entity.save">
 <code class="descname">save</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.entity.Entity.save" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save the entity in its assigned database.</p>
@@ -114,6 +100,20 @@ the entity without any direct calls to its data provider.</p>
 <dt id="DataProvider.entity.Entity.delete">
 <code class="descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.entity.Entity.delete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete the entity from its assigned database.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DataProvider.entity.Entity.prettyString">
+<code class="descname">prettyString</code><span class="sig-paren">(</span><em>indent=0</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.entity.Entity.prettyString" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>indent</strong> (<em>int</em>) &#8211; The indent level for the string.</td>
+</tr>
+</tbody>
+</table>
+<p>You probably shouldn&#8217;t use this, as it&#8217;s typically used for recursion.</p>
 </dd></dl>
 
 </dd></dl>

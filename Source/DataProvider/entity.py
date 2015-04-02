@@ -120,7 +120,9 @@ class Entity(dict):
             
     def prettyString(self, indent = 0):
         """
-        :integer indent: The indent level for the string.  
+        :param indent: The indent level for the string.
+        :type indent: int
+        
         You probably shouldn't use this, as it's typically used for recursion.
         """
         
