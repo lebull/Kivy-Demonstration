@@ -152,52 +152,6 @@ encoded basicAuth header encoded with the provided username and password.</p>
 </ul>
 </div>
 </div>
-<div class="section" id="module-DataProvider.soapDataProvider">
-<span id="soapdataprovider"></span><h2>SoapDataProvider<a class="headerlink" href="#module-DataProvider.soapDataProvider" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="DataProvider.soapDataProvider.SoapRequestBuilder">
-<em class="property">class </em><code class="descclassname">DataProvider.soapDataProvider.</code><code class="descname">SoapRequestBuilder</code><span class="sig-paren">(</span><em>url</em>, <em>action_url</em>, <em>keys</em>, <em>version='1.2'</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.soapDataProvider.SoapRequestBuilder" title="Permalink to this definition">¶</a></dt>
-<dd><p>A soapRequestBuilder object represents a single soap request.</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="DataProvider.soapDataProvider.SoapResponseParser">
-<em class="property">class </em><code class="descclassname">DataProvider.soapDataProvider.</code><code class="descname">SoapResponseParser</code><a class="headerlink" href="#DataProvider.soapDataProvider.SoapResponseParser" title="Permalink to this definition">¶</a></dt>
-<dd><p>Static class to parse incoming soap responses.</p>
-<dl class="classmethod">
-<dt id="DataProvider.soapDataProvider.SoapResponseParser.getActionsFromWsdl">
-<em class="property">classmethod </em><code class="descname">getActionsFromWsdl</code><span class="sig-paren">(</span><em>wsdl_data</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.soapDataProvider.SoapResponseParser.getActionsFromWsdl" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parses out soapaction&#8217;s from WSDL files.  This will be used to get an
-action&#8217;s url from the action itself.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">String wsdl_data:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="classmethod">
-<dt id="DataProvider.soapDataProvider.SoapResponseParser.getEntityFromQuery">
-<em class="property">classmethod </em><code class="descname">getEntityFromQuery</code><span class="sig-paren">(</span><em>result</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.soapDataProvider.SoapResponseParser.getEntityFromQuery" title="Permalink to this definition">¶</a></dt>
-<dd><p>Converts a soap response into an entity or entities.  
-It will return a tree of entities, but the leaf nodes (hopefully
-a collection of attributes) will be represented as dictionaries.  
-Otherwise, you would have an entity for every individual attribute.</p>
-<p>&#64;param result:
-&#64;type string:</p>
-</dd></dl>
-
-</dd></dl>
-
-<div class="toctree-wrapper compound">
-<ul class="simple">
-</ul>
-</div>
-</div>
 <div class="section" id="module-DataProvider.kivyClockSimulator">
 <span id="kivyclocksimulator"></span><h2>KivyClockSimulator<a class="headerlink" href="#module-DataProvider.kivyClockSimulator" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -246,7 +200,6 @@ stop() when you are done with it.</p>
 <li><a class="reference internal" href="#">Modules</a><ul>
 <li><a class="reference internal" href="#module-DataProvider.entity">Entity</a></li>
 <li><a class="reference internal" href="#module-DataProvider.dataprovider">DataProvider</a></li>
-<li><a class="reference internal" href="#module-DataProvider.soapDataProvider">SoapDataProvider</a></li>
 <li><a class="reference internal" href="#module-DataProvider.kivyClockSimulator">KivyClockSimulator</a></li>
 </ul>
 </li>

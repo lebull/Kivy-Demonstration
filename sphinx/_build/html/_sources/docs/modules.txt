@@ -18,15 +18,6 @@ DataProvider
 .. toctree::
    :maxdepth: 4
    
-SoapDataProvider
-----------------
-
-.. automodule:: DataProvider.soapDataProvider
-   :members:
-   
-.. toctree::
-   :maxdepth: 4
-   
 KivyClockSimulator
 ------------------
 
