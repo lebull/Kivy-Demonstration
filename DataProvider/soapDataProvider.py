@@ -58,7 +58,7 @@ class SoapProvider(NetworkDataProvider):
         
         def on_fail_local(request, result):
             print "FAIL :("
-            print request.result
+            on_failure(request, result)
         
         def on_success_local(request, result):
             print "SUCCESS!!"
@@ -161,6 +161,8 @@ class SoapResponseParser(object):
     """Static class to parse incoming soap responses."""
     #TODO: Regexes to avoid namespace conflicts.  This should be fun...
     
+
+    
     @classmethod
     def getActionsFromWsdl(cls, wsdl_data):
         """Parses out soapaction's from WSDL files.  This will be used to get an
@@ -227,8 +229,6 @@ class SoapResponseParser(object):
 if __name__ == "__main__":
     from kivyClockSimulator import ClockSim
 
-
-    
     def print_entity(entity):
         print entity.prettyString()
     

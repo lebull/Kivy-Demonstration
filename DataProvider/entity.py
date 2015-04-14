@@ -49,6 +49,8 @@ class Entity(dict):
         self.data_provider = data_provider
         #: The key.  Not required.  Not sure if useful.
         self.key = key
+        self._loading_url = ""
+        self._loaded = properties != None #If we are giving it some initial properties, we're calling it loaded.
 
         #Initial Attributes
         if properties is None:
@@ -117,6 +119,21 @@ class Entity(dict):
         else:
             #TODO: Throw error that entity has no parent data provider
             print "No Data Provider"
+            
+    def loadEntity(self):
+        assert self.data_provider != None
+        assert self._loading_url != None
+        
+        def load_properties(entities):
+            new_entity = entities[0]
+            self.properties = new_entity.properties
+            
+        
+        self.data_provider.query(self._loading_url, on_success = load_properties)
+        self.data_provider.wait()
+        
+        
+        
             
     def prettyString(self, indent = 0):
         """
