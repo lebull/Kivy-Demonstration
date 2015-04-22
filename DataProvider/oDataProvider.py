@@ -1,6 +1,7 @@
 from dataprovider import NetworkDataProvider, CrudDataProvider
 from entity import Entity
 import json
+from docutils.parsers.rst.directives import path
 
 #TODO: lets point to a single on_fail function.
 
@@ -20,7 +21,8 @@ class ODataProvider(NetworkDataProvider, CrudDataProvider):
         self.latestversion = ""
 
     #TODO: This is a misnomer. It's more of a test of authentication credentials.
-    def connect(self, username, password, on_success = None, on_failure = None):
+    def connect(self, username, password, 
+                on_success = None, on_failure = None):
         """
         Provides the kivy service with the target URL as well as credentials for
         basic authentication.  This also verifies that the username and password are
@@ -44,87 +46,149 @@ class ODataProvider(NetworkDataProvider, CrudDataProvider):
             on_success = on_success_local,
             on_failure = on_failure)
 
+    def getEntity(self, path, 
+                  on_success = None, on_failure = None, wait = False):
+        """Returns a single entities"""
 
-    def query(self, path, method = 'GET', on_success = None, on_failure = None):
-        """Defines basic behavior on getEntity or getEntitySet."""
-        
-        #Get rid of the url if it is in there.
-        
-        path = path.replace(self.url, "")
-
-        #If we need need to parse our result...
-        we_should_return_entities = method in ['GET']
-
-        #Parse entities out of the result.  Call the callback passing the resulting entities.
         def on_success_local(request, result):
             if on_success != None:
-                if we_should_return_entities:
-                    #TODO: Parse out entities
-                    entities = ODataParser.parseEntitiesFromDict(result)
-                    on_success(entities)
-                else:
-                    on_success(result)
+                on_success(ODataParser.parseEntityFromDict(result, odata_provider = self))
+                
+        self._getSomething(path         = path,
+                           on_success   = on_success_local,
+                           on_failure   = on_failure,
+                           wait         = wait)
 
-        #The default behavior if a request fails.
-        def on_fail_local(request, result):
-            #TODO: May not always have a response.  It may fail from no connection.
-
-            if on_failure != None:
-                on_failure(request, result)
+    def getEntities(self, path, 
+                    on_success = None, on_failure = None, wait = False):
+        """Returns a collection of entities"""
+        
+        def on_success_local(request, result):
+            if on_success != None:
+                on_success(ODataParser.parseEntitiesFromDict(result, odata_provider = self))
+                
+        self._getSomething(path         = path,
+                           on_success   = on_success_local,
+                           on_failure   = on_failure,
+                           wait         = wait)
+        
+    def _getSomething(self, path, 
+                      on_success = None, on_failure = None, wait = False):
+        
+        path = self._validatePath(path)
         
         self._sendRequest(
-            url = self.url + path + '?$format=json' ,         #TODO: Support other parameters.
-            method = method,
-            on_success = on_success_local,
-            on_failure = on_fail_local)
+            url         = self.url + path + '?$format=json' ,         #TODO: Support other parameters.
+            method      = 'GET',
+            on_success  = on_success,
+            on_failure  = on_failure,
+            wait        = wait)
         
+    def _validatePath(self, path):
+        #TODO: Check if path contains a url that's not the current url.
+        #Get rid of the url if it is in there.
+        path = path.replace(self.url, "")
+        return path
 
-
+#private
 class ODataParser(object):
-    
-    @staticmethod
-    def parseEntitiesFromDict(data_dict):
+    """Parses a python dictionary into an ODataEntity"""
+    @classmethod
+    def parseEntityFromDict(cls, data_dict, odata_provider):
+
+        #The first layer is just a wrapper, so knock it off.
+        data_dict = data_dict.popitem()[1]
+        data_dict = cls._convertDeferredToUnloadedEntities(data_dict, odata_provider)
+        return ODataEntity(properties=data_dict)
+        
+    @classmethod
+    def parseEntitiesFromDict(cls, data_dict, odata_provider):
         """This method returns either a single entity or an array of entities.  This
         is determined by the format of the oData that is returned.  Just kidding, the
         two variables actually fight to the death."""
         
-        #So does this method return one entity or multiple?  Only time will tell!
-        winner = 'returnEntities' #Looks like we have a crowd favorite!
-        returnEntity = None
+        #The first layer is just a wrapper, so knock it off.
+        clensed_data_dict = data_dict.popitem()[1]
+        
+        clensed_data_dict = clensed_data_dict['results']
+        
+        #Loop through every entry and create an entity out of it.
         returnEntities = []
+        for entity_properties in clensed_data_dict:
+            #Replace _deferred with UnloadedQuery
+            entity_properties = cls._convertDeferredToUnloadedEntities(entity_properties, odata_provider)
+            returnEntities.append(ODataEntity(properties=entity_properties, data_provider = odata_provider))
+        return returnEntities
+    
+    @classmethod
+    def _convertDeferredToUnloadedEntities(cls, properties, odata_provider):
         
-        #FIGHT TO THE DEATH
-        
-        #The first layer of 
-        data_dict = data_dict.popitem()[1]
-        
-        #If the next layer is results, we return an array.  If not, we return a
-        #single entity
-        try:
-            data_dict = data_dict['results'] #Looks like returnEntities is starting off strong.  Right in the gonads!
-            
-            #Loop through every entry and create an entity out of it.
-            for data_row in data_dict:
-                returnEntities.append(Entity(properties=data_row))
-            
-        except AttributeError:
-            winner = 'returnEntity'     #UNBELIEVABLE!  he just came out of nowhere and took victory from the jaws of defeat!
-            returnEntity = Entity(properties=data_dict) 
-            
-        finally: #Here we are in the winner's circle
-            if winner == 'returnEntities':
-                return returnEntities    #GG
-            elif winner == 'returnEntity':
-                return returnEntity      #GG
-            else:
-                return "Everyone's money.  Not a good fight :(" #BG
-        
-        #TODO: Convert _deferred to unloaded entities
+        for key, value in properties.iteritems():
+            if type(value) == dict:
+                if key == "__deferred":
+                    #TAG: Can this contain multiple uris?.
+                    properties = UnloadedQuery(uri = value['uri'], odata_provider = odata_provider)
+                else:
+                    #We need to convert the sub-dictionary
+                    properties[key] = cls._convertDeferredToUnloadedEntities(value, odata_provider)
+                
+        return properties
+    
+              
+class ODataEntity(Entity):
+    
+    #TODO: Load metadata into its own instance attribute :3
+    def __getattr__(self, item):
+        #If we try to access an UnloadedQuery, then we need to load that
+        #entity set
+        returnItem = super(ODataEntity, self).__getattr__(item)
+        if type(returnItem) == UnloadedQuery:
+            returnItem = returnItem.getEntities()
+        return returnItem
 
-    
-    
-    
-    
+#Private
+class UnloadedQuery(object):
+    '''
+    .. todo::
+        Convert to UnloadedEntity
+    '''
+    def __init__(self, uri, odata_provider):
+        self.uri = uri
+        self.odata_provider = odata_provider
 
-    #http://sapgwvci.ipaper.com:8025/sap/opu/odata/sap/YNI_SPIDER_SRV/?$format=xml
-    #http://sapgwvci.ipaper.com:8025/sap/opu/odata/sap/YNI_SPIDER_SRV/$metadata?$format=json
+    def getEntities(self):
+        #TODO: There has to be another way to get around this namespace crap.
+        #Ohmygod python is not good with namespaces in the asynchronous world.  Make it stahp!
+        
+        return_entities = [[]]
+        error = [False] #TAG: Wrapped in an array because of the namespace issues.  Sorry :x
+        
+        def on_success_local(entities):
+            return_entities[0] = entities
+        
+        def on_failure_local(request, result):
+            error[0] = [True]
+        
+        self.odata_provider.getEntities(path = self.uri,
+                                        on_success = on_success_local,
+                                        on_failure = on_failure_local,
+                                        wait = True)
+        
+        if error[0] == True:
+            raise RuntimeError('Issue with loading an UnloadedQuery')
+            #TODO: Raise an...attribute error?
+        else:
+            return return_entities[0]
+        #TODO: Catch a ResultMismatch exception, then try with getEntity.
+        
+    def __str__(self):
+        return "(UnloadedQuery - {})".format(self.uri)
+
+
+#TODO: Errors for: 
+#
+#ResultMismatch
+#    Try to get multiple entities when result is formatted for one.
+#    Visa Versa
+
+#UnloadedQuery cannot load entities from uri.

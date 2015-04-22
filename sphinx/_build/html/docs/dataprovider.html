@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Project Summary &mdash; DataProvider 0.1 documentation</title>
+    <title>DataProvider &mdash; DataProvider 0.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -24,7 +24,8 @@
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="DataProvider 0.1 documentation" href="../index.html" />
-    <link rel="prev" title="Root Module" href="modules.html" /> 
+    <link rel="next" title="Root Module" href="modules.html" />
+    <link rel="prev" title="Welcome to DataProvider’s documentation!" href="../index.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -38,6 +39,9 @@
              >modules</a> |</li>
         <li class="right" >
           <a href="modules.html" title="Root Module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Welcome to DataProvider’s documentation!"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">DataProvider 0.1 documentation</a> &raquo;</li> 
       </ul>
@@ -48,11 +52,31 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="project-summary">
-<h1>Project Summary<a class="headerlink" href="#project-summary" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="goals-achieved">
-<h2>Goals Achieved<a class="headerlink" href="#goals-achieved" title="Permalink to this headline">¶</a></h2>
-<p>I made a goal!</p>
+  <div class="section" id="module-DataProvider.dataprovider">
+<span id="dataprovider"></span><h1>DataProvider<a class="headerlink" href="#module-DataProvider.dataprovider" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="DataProvider.dataprovider.NetworkDataProvider">
+<em class="property">class </em><code class="descclassname">DataProvider.dataprovider.</code><code class="descname">NetworkDataProvider</code><span class="sig-paren">(</span><em>url=None</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.NetworkDataProvider" title="Permalink to this definition">¶</a></dt>
+<dd><p>The DataService class provides a base class for any remote service such as
+oData or soap.</p>
+<dl class="method">
+<dt id="DataProvider.dataprovider.NetworkDataProvider.setBasicAuth">
+<code class="descname">setBasicAuth</code><span class="sig-paren">(</span><em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.NetworkDataProvider.setBasicAuth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Once set, every request sent to the server will append a base-64
+encoded basicAuth header encoded with the provided username and password.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DataProvider.dataprovider.NetworkDataProvider.wait">
+<code class="descname">wait</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DataProvider.dataprovider.NetworkDataProvider.wait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Block until the dataprovider has no pending requests</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
 </div>
 </div>
 
@@ -62,21 +86,16 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Project Summary</a><ul>
-<li><a class="reference internal" href="#goals-achieved">Goals Achieved</a></li>
-</ul>
-</li>
-</ul>
-
   <h4>Previous topic</h4>
+  <p class="topless"><a href="../index.html"
+                        title="previous chapter">Welcome to DataProvider&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
   <p class="topless"><a href="modules.html"
-                        title="previous chapter">Root Module</a></p>
+                        title="next chapter">Root Module</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/docs/project.txt"
+      <li><a href="../_sources/docs/dataprovider.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -108,6 +127,9 @@
              >modules</a> |</li>
         <li class="right" >
           <a href="modules.html" title="Root Module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Welcome to DataProvider’s documentation!"
              >previous</a> |</li>
         <li><a href="../index.html">DataProvider 0.1 documentation</a> &raquo;</li> 
       </ul>

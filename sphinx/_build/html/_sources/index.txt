@@ -12,13 +12,31 @@ Requirements:
 
 My project depends on Kivy.
 
-Contents:
+Entity
+------
+Explain Entities here
+(TODO)
+
+Dataprovider
+------------
+Explain DataProviders Here
 
 .. toctree::
-   :maxdepth: 2
+    :maxdepth: 2
 
-   docs/modules
-   docs/project
+    docs/dataprovider    
+    
+ODataProvider
+-------------
+(TODO)
+
+Misc:
+
+.. toctree::
+    :maxdepth: 2
+    
+    docs/modules
+    docs/project
 
 
 Indices and tables

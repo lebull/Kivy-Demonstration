@@ -7,9 +7,10 @@ import time
 
 from kivy.network.urlrequest import UrlRequest
 
+class DataProvider(object):
+    pass
 
-class CrudDataProvider(object):
-
+class CrudDataProvider(DataProvider):
     #CRUD
     #TODO: createEntity might be a little redundant.  Not sure what I think about it.
     def createEntity(self, **kwargs):
@@ -27,7 +28,7 @@ class CrudDataProvider(object):
     def _deleteEntity(self, **kwargs):
         raise NotImplementedError()
             
-class NetworkDataProvider(object):
+class NetworkDataProvider(DataProvider):
     """The DataService class provides a base class for any remote service such as
     oData or soap."""
     
@@ -38,7 +39,6 @@ class NetworkDataProvider(object):
         """
         self.timeout = 15
         self.pending_requests = 0
-        self.request_list = []
         self.auth_header = {}
         
         self.url = url
@@ -53,26 +53,20 @@ class NetworkDataProvider(object):
             str(username), str(password))).encode('base-64'),
             'Accept': '*/*'}
 
-    def _sendRequest(self, url, method, req_headers = {}, req_body = None, on_success = None, on_failure = None):
-        """Send a UrlRequest with the appropriate callbacks.
+    def _sendRequest(self, url, method, req_headers = {}, req_body = None, on_success = None, on_failure = None, wait = False):
+        '''Send a UrlRequest with the appropriate callbacks.
         
-        @todo implement on_update
-        :param path:
-        :param path:
-        :param method:
-        :param req_headers:
-        :param req_body:
-        :param on_success:
-        :param on_failure:
+        :Parameters:
+            `url` : string
+            `method` : string
+            `req_headers` : dict<string>
+            `req_body` : string
+            `on_success` : function
+            `on_failure` : function
         
-        :type path: string ladeda
-        :type path: string
-        :type method: string
-        :type req_headers: dict
-        :type req_body: string
-        :type on_success: function
-        :type on_failure: function
-        """
+        :todo:
+            implement on_update
+        '''
         
         def on_success_local(request, result):
             on_always_local(request, result)
@@ -117,18 +111,17 @@ class NetworkDataProvider(object):
                              on_failure = on_failure_local,
                              on_error   = on_failure_local,
                              timeout    = self.timeout)
-
-        self.request_list.append(request)
         
         self.pending_requests += 1
         
+        if(wait == True):
+            request.wait()
+        
     def wait(self):
-        """Block until the dataprovider has no pending requests"""
+        '''Block until the dataprovider has no pending requests'''
         while self.pending_requests > 0:
-            time.sleep(0.5)
+            time.sleep(0.5) 
             
-    #TODO:  have an "ordered wait" that waits until all current request are
-    #complete but ignores any requests made afterwards.
 
 if __name__ == "__main__":
     pass

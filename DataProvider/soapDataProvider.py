@@ -17,9 +17,8 @@ class SoapProvider(NetworkDataProvider):
         :string url:
         :kwargs:
         """
-        self.url    = url
+        super(SoapProvider, self).__init__(url = url, **kwargs)
         self.actions = {}
-        super(SoapProvider, self).__init__(**kwargs)
         self._populateActions()
         
     def _populateActions(self):
@@ -38,9 +37,10 @@ class SoapProvider(NetworkDataProvider):
         self._sendRequest(url   = self.url + "?WSDL", 
                   method        = 'GET', 
                   on_success    = on_success_local, 
-                  on_failure    = on_fail_local)
+                  on_failure    = on_fail_local,
+                  wait          = True)
 
-    def query(self, action, keys, on_success = None, on_failure = None):
+    def query(self, action, keys, on_success = None, on_failure = None, wait = False):
         """
         Call an action for the soap service.
         :string action:
@@ -77,7 +77,8 @@ class SoapProvider(NetworkDataProvider):
                           req_headers   = soap_request.headers, 
                           req_body      = soap_request.body, 
                           on_success    = on_success_local, 
-                          on_failure    = on_fail_local)
+                          on_failure    = on_fail_local,
+                          wait          = wait)
         
     def getActions(self):
         """
@@ -225,27 +226,3 @@ class SoapResponseParser(object):
         #If not, return an Entity.
         else:
             return return_entity
-        
-if __name__ == "__main__":
-    from kivyClockSimulator import ClockSim
-
-    def print_entity(entity):
-        print entity.prettyString()
-    
-    def testWeather():
-        dp = SoapProvider("http://wsf.cdyne.com/WeatherWS/Weather.asmx")
-        
-        dp.query(action = "GetCityWeatherByZIP",
-                 keys   = {"ZIP": "38654"},
-                 on_success = print_entity)
-        
-        dp.wait()
-    
-    def main():
-        clocksim = ClockSim()
-        clocksim.start()
-        testWeather()
-        clocksim.stop()
-        
-    main()
-    
